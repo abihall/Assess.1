@@ -1,7 +1,7 @@
 public class Song {
 
-   private String name, artist, genre;
-   private int duration;
+   private String name=null, artist=null, genre=null;
+   private int duration=0;
 
     public void setName(String inputName) {
         name = inputName;

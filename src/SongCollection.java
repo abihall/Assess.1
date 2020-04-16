@@ -227,11 +227,11 @@ public class SongCollection {
         }
         if(album2!=null){
             System.out.println("Album name: " + album2.getName());
-            System.out.println(album1.list());
+            System.out.println(album2.list());
         }
         if(album3!=null){
             System.out.println("Album name: " + album3.getName());
-            System.out.println(album1.list());
+            System.out.println(album3.list());
         }
 
     } //lists all the albums
@@ -257,14 +257,15 @@ public class SongCollection {
         String genre;
         boolean u = false;
         System.out.println("please enter the genre you would like to list all the songs for ");
-        genre = y.next();
+        y.nextLine();
+        genre = y.nextLine();
         while(!u){
             if(genre.equalsIgnoreCase("rock")|| genre.equalsIgnoreCase("pop") || genre.equalsIgnoreCase("hip-hop") || genre.equalsIgnoreCase("bossa nova")){
                 u = true;
             }
             else{
                 System.out.println("genre can only be rock, pop, hip-hop or bossa nova, please enter the genre of the song:");
-                genre = y.next();
+                genre = y.nextLine();
             }
         }
         System.out.println("all the songs of this genre are: ");
@@ -293,28 +294,28 @@ public class SongCollection {
                 if(album1!=null) System.out.println(album1.getName());
                 if(album2!=null) System.out.println(album2.getName());
                 if(album3!=null) System.out.println(album3.getName());
-
-                choice = y.next();
+                y.nextLine();
+                choice = y.nextLine();
             } else{
                 System.out.println("there is no albums to list you must make a album before deleting it");
                 u = true;
             }
         if(album1!=null){
-            if(album1.getName().equals(choice)){
+            if(album1.getName().equalsIgnoreCase(choice)){
                 System.out.println(album1.getName()+ " was deleted");
                 album1=null;
                 u = true;
             }
         }
         if(album2!=null){
-            if(album2.getName().equals(choice)){
+            if(album2.getName().equalsIgnoreCase(choice)){
                 System.out.println(album2.getName()+ " was deleted");
                 album2 = null;
                 u = true;
             }
         }
         if(album3!=null){
-            if(album3.getName().equals(choice)){
+            if(album3.getName().equalsIgnoreCase(choice)){
                 System.out.println(album3.getName()+ " was deleted");
                 album3 = null;
                 u = true;

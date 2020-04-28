@@ -3,10 +3,13 @@ import java.util.*;
 public class SongCollection {
     private Album album1=null, album2=null, album3=null;
     private int end1 = 0, choice2;
-    private String name1;
+    private String name1, albumName;
     private void run() {
+        System.out.println("before we start, there are a few things to note: ");
+        System.out.println("the input is not case sensitive nor does it matter if spaces are put before or after the input");
         do {
             Scanner console = new Scanner(System.in);
+            System.out.println("\nthe following is a list of all the tasks you can complete, please type the corrosponding number to the take you would like to complete");
             System.out.println("(1) create a album");
             System.out.println("(2) enter a new song into a album");
             System.out.println("(3) list of all songs");
@@ -28,26 +31,50 @@ public class SongCollection {
                     break;
                 }
                 case 3: {
+                    if(album1==null && album2==null && album3==null){
+                        System.out.println("there are no albums to list the songs for");
+                        break;
+                    }
                     listSongs(console);
                     break;
                 }
                 case 4: {
+                    if(album1==null && album2==null && album3==null){
+                        System.out.println("there are no albums to list");
+                        break;
+                    }
                     listAlbums();
                     break;
                 }
                 case 5: {
+                    if(album1==null && album2==null && album3==null){
+                        System.out.println("there are no songs yet");
+                        break;
+                    }
                     listUnder(console);
                     break;
                 }
                 case 6: {
+                    if(album1==null && album2==null && album3==null){
+                        System.out.println("there are no songs yet");
+                        break;
+                    }
                     listGenre(console);
                     break;
                 }
                 case 7: {
+                    if(album1 == null && album2 == null && album3 == null) {
+                        System.out.println("there are no albums to delete");
+                        break;
+                    }
                     deleteAlbum(console);
                     break;
                 }
                 case 8: {
+                    if(album1 == null && album2 == null && album3 == null) {
+                        System.out.println("there are no songs to delete");
+                        break;
+                    }
                     deleteSong(console);
                     break;
                 }
@@ -56,12 +83,14 @@ public class SongCollection {
                     return;
                 }
                 default: {
-                    System.out.println("incorrect input, please start again and enter 1,2,3,4,5,6,7,8 or 9.\n"); //default is used if hte user inputs a number that isn't in the switch case
+                    System.out.println("incorrect input, please enter 1,2,3,4,5,6,7,8 or 9 next time\n"); //default is used if hte user inputs a number that isn't in the switch case
                     break;
                 }
             }
-            System.out.println("\n do you want to continue editing your albums? (1) yes, (0) no");
-            end1 = console.nextInt();
+            do{
+                System.out.println("\n do you want to continue editing your albums? (1) yes, (0) no");
+                end1 = console.nextInt();
+            }while(end1 != 0 && end1 != 1);
         } while (end1 != 0);
 
     }
@@ -75,7 +104,7 @@ public class SongCollection {
         if(album1==null || album2==null || album3==null){
             System.out.println("please enter the name of your album:");
             y.nextLine();
-            name1 = y.nextLine();
+            name1 = y.nextLine().strip();
 
             if(!checkAlbumExist(name1)){
                 if(album1==null){
@@ -103,73 +132,51 @@ public class SongCollection {
         }
     } //adds an album; DONE gives error if album already exists, if there is not enough room
 
-    public void newSong(Scanner y){
-        if(album1==null && album2==null && album3==null){
+    public void newSong(Scanner y) {
+        boolean valid = false;
+        if (album1 == null && album2 == null && album3 == null) {
             System.out.println("there are no albums to add songs into");
             return;
         }
-        System.out.println("what album would you like to add a song into?");
-        if(album1!=null)
-            System.out.println("Press (1) to add a song to " + album1.getName());
-        if(album2!=null)
-            System.out.println("Press (2) to add song to " + album2.getName());
-        if(album3!=null)
-            System.out.println("Press (3) to add song to " + album3.getName());
+        System.out.println("Please type the name of the album you want to add a song into, the following are the options: ");
+        if (album1 != null)
+            System.out.println(album1.getName());
+        if (album2 != null)
+            System.out.println(album2.getName());
+        if (album3 != null)
+            System.out.println(album3.getName());
 
-        choice2 = y.nextInt();
-            switch (choice2) {
-                case 1: {
-                        if (album1 != null) {
-                        int n = album1.getNumberSongs();
-                        if (n == 4) {
-                            System.out.println("you cannot add more than 4 songs, please delete before adding another");
-                        } else {
-                            album1.addSong(y);
-                        }
-                    } else{
-                        System.out.println("you didnt choose a valid option");
-                    }
-                    break;
-                }
-                case 2: {
-                    if (album2 != null) {
-                        int n = album2.getNumberSongs();
-                        if (n == 4) {
-                            System.out.println("you cannot add more than 4 songs, please delete before adding another");
-                        } else {
-                            album2.addSong(y);
-                        }
-                    } else{
-                        System.out.println("you didnt choose a valid option");
-                    }
-                    break;
-                }
-                case 3: {
-                    if (album3 != null) {
-                        int n = album3.getNumberSongs();
-                        if (n == 4) {
-                            System.out.println("you cannot add more than 4 songs, please delete before adding another");
-                        } else {
-                            album3.addSong(y);
-                        }
-                    } else{
-                        System.out.println("you didnt choose a valid option");
-                    }
-                    break;
-                }
-                default: {
-                    System.out.println("you didn't choose a valid option");
-                    break;
-                }
+        albumName = y.next().strip();
+
+        if (album1 != null) {
+            if (album1.getName().equalsIgnoreCase(albumName)) {
+                valid = true;
+                album1.addSong(y);
             }
-    } //adds a new song to a album; DONE doesnt add a song if the album doesnt exist or is full, exceed time limit, if song already exists
+        } else if (album2 != null) {
+            if (album2.getName().equalsIgnoreCase(albumName)) {
+                valid = true;
+                album2.addSong(y);
+            }
+        } else if (album3 != null) {
+            if (album3.getName().equalsIgnoreCase(albumName)) {
+                valid = true;
+                album3.addSong(y);
+            }
+        }
+        if (!valid) {
+            System.out.println("you didnt enter a valid option");
+        }
+    }
+
+    //adds a new song to a album; DONE doesnt add a song if the album doesnt exist or is full, exceed time limit, if song already exists
 
     public void listSongs(Scanner y){
         boolean u;
-      //  if(album1==null && album2==null && album3==null){
-      //      System.out.println("there are no existing albums so the songs cannot be listed");
-     //       return;
-     //   }
+        if(album1==null && album2==null && album3==null){
+            System.out.println("there are no existing albums so the songs cannot be listed");
+            return;
+               }
         System.out.println("what album would you like to list all the songs for?");
         if(album1!=null) System.out.println("Press (1) for all the songs in " + album1.getName());
         if(album2!=null) System.out.println("Press (2) for all the songs in " + album2.getName());
@@ -178,10 +185,6 @@ public class SongCollection {
         switch (choice2) {
             case 1: {
                 if (album1 != null) {
-                    u = album1.checkSong();
-                    if(!u){
-                        System.out.println("there is no songs within this album so the songs cannot be listed");
-                    }
                     System.out.println(album1.list());
                 }
                 else System.out.println("that wasn't a valid album so it cannot be listed");
@@ -190,10 +193,6 @@ public class SongCollection {
             }
             case 2: {
                 if (album2 != null) {
-                    u = album2.checkSong();
-                    if(!u){
-                        System.out.println("there is no songs within this album so the songs cannot be listed");
-                    }
                     System.out.println(album2.list());
                 }
                 else System.out.println("that wasn't a valid album so it cannot be listed");
@@ -202,10 +201,6 @@ public class SongCollection {
             }
             case 3: {
                 if (album3 != null){
-                    u = album3.checkSong();
-                    if(!u){
-                        System.out.println("there is no songs within this album so the songs cannot be listed");
-                    }
                     System.out.println(album3.list());
                 }
                 else System.out.println("that wasn't a valid album so it cannot be listed");
@@ -218,9 +213,7 @@ public class SongCollection {
 
     public void listAlbums(){
         System.out.println("the following is a list of all albums and songs");
-        if(album1==null && album2==null && album3==null){
-            System.out.println("there are no albums to list");
-        }
+
         if(album1!=null) {
             System.out.println("Album name: " + album1.getName());
             System.out.println(album1.list());
@@ -237,25 +230,29 @@ public class SongCollection {
     } //lists all the albums
 
     public void listUnder(Scanner y){
-            int under;
-            System.out.println("what duration must the songs be under in whole minutes?");
-            under = y.nextInt();
-            System.out.println("all the songs under this time are: ");
-            if(album1 != null){
-                    System.out.print(album1.underDuration(under));
-            }
-            if(album2 != null){
-                    System.out.print("\n" +album2.underDuration(under));
-            }
-            if(album3 != null){
-                    System.out.print("\n" +album3.underDuration(under));
-            }
+        int under;
+        boolean check = checkSongInAll();
+        if(check) return;
+        System.out.println("what duration must the songs be under in whole minutes?");
+        under = y.nextInt();
+        System.out.println("all the songs under this time are: ");
+        if(album1 != null){
+            System.out.print(album1.underDuration(under));
+        }
+        if(album2 != null){
+            System.out.print("\n" +album2.underDuration(under));
+        }
+        if(album3 != null){
+            System.out.print("\n" +album3.underDuration(under));
+        }
 
     } //lists all the songs under a certian time that is inputted by the user; TO DO dont list if albums/songs is zero
 
     public void listGenre(Scanner y){
         String genre;
         boolean u = false;
+        boolean check = checkSongInAll();
+        if(check) return;
         System.out.println("please enter the genre you would like to list all the songs for ");
         y.nextLine();
         genre = y.nextLine();
@@ -269,9 +266,7 @@ public class SongCollection {
             }
         }
         System.out.println("all the songs of this genre are: ");
-        if(album1==null && album2 == null && album3 == null){
-            System.out.println("there are no albums so the songs of the genre cannot be displayed ");
-        }
+
         if(album1 != null){
             System.out.print(album1.listGenre(genre));
         }
@@ -280,9 +275,6 @@ public class SongCollection {
         }
         if(album3 != null){
             System.out.print("\n" +album3.listGenre(genre));
-        }
-        if(album3!=null && album2!=null && album1!= null && album1.listGenre(genre).equals("") && album2.listGenre(genre).equals("") && album3.listGenre(genre).equals("")){
-            System.out.println("there are no songs to display within any of the albums");
         }
     } //lists all the songs from a specific genre specified by the user; TO DO dont list if albums/songs is zero
 
@@ -329,45 +321,86 @@ public class SongCollection {
 
     public void deleteSong(Scanner y){
         String choice;
-        System.out.println("please enter the song name that you would like to delete, the options are: ");
-        if (album1 != null) System.out.println("all the songs in"+album1.getName()+ " are" +album1.list());
-        if (album2 != null) System.out.println("all the songs in" +album2.getName()+ " are" +album2.list());
-        if (album3 != null) System.out.println("all the songs in" +album3.getName()+ " are" +album3.list());
-        else System.out.println("there are no songs to delete");
-        choice = y.next();
-
+        String artist;
+        boolean al = false;
+        System.out.println("the following is a list of all the songs in each album: \n");
         if (album1 != null) {
-            if (album1.checkSongExists(choice)) {
-                album1.deleteSong(choice);
-            }
+            System.out.println("all the songs in the album '"+album1.getName()+ "' are: \n" +album1.list());
         }
         if (album2 != null) {
-            if(album2.checkSongExists(choice)){
-                album2.deleteSong(choice);
-            }
+            System.out.println("all the songs in the album '" +album2.getName()+ "' are: \n" +album2.list());
         }
         if (album3 != null) {
-            if(album3.checkSongExists(choice)){
-                album3.deleteSong(choice);
+            System.out.println("all the songs in album '" +album3.getName()+ "' are:\n " +album3.list());
+        }
+        System.out.println("please enter the name of the album that has the song you want to delete");
+        String album_name = y.next();
+        if(!checkAlbumExist(album_name)) {
+            System.out.println("that album doesnt exist so a song cannot be deleted from it");
+            return;
+        }
+        System.out.println("please enter the name of the song: ");
+        choice = y.next();
+        System.out.println("please enter the name of the artist: ");
+        artist = y.next();
+
+        if (album1 != null) {
+            if(album1.getName().equalsIgnoreCase(album_name)){
+                if (album1.checkSongExists(choice, artist)) {
+                    al = true;
+                    album1.deleteSong(choice, artist);
+                }
+            }
+        } if (album2 != null) {
+            if(album2.getName().equalsIgnoreCase(album_name)){
+                if (album2.checkSongExists(choice, artist)) {
+                    al = true;
+                    album2.deleteSong(choice, artist);
+                }
+            }
+        } if (album3 != null) {
+            if(album3.getName().equalsIgnoreCase(album_name)){
+                if (album3.checkSongExists(choice, artist)) {
+                    al = true;
+                    album3.deleteSong(choice, artist);
+                }
             }
         }
-        } //deletes a song; DONE delete a song that does not exist
+        if(!al) System.out.println("that song does not exist so it cant be deleted. ");
+
+    } //deletes a song; DONE delete a song that does not exist
 
     public Boolean checkAlbumExist(String x){
         if(album1 != null){
-            if(album1.getName().equals(x)){
+            if(album1.getName().equalsIgnoreCase(x)){
                 return true;
             }
         }
         if(album2 != null){
-            if(album2.getName().equals(x)){
+            if(album2.getName().equalsIgnoreCase(x)){
                 return true;
             }
         }
         if(album3 != null){
-            if(album3.getName().equals(x)) {
+            if(album3.getName().equalsIgnoreCase(x)) {
                 return true;
             }
+        }
+        return false;
+    }
+
+    public boolean checkSongInAll(){
+        boolean u = false, v = false, k = false;
+        if (album1 != null) {
+            u = album1.checkAllSong();
+        } if(album2 != null){
+            v = album2.checkAllSong();
+        } if(album3 != null){
+            k = album3.checkAllSong();
+        }
+        if (!u && !v && !k) {
+            System.out.println("there are no songs within any of the albums so what you want cannot be displayed");
+            return true;
         }
         return false;
     }

@@ -27,4 +27,10 @@ public class Song {
     public int getDuration(){
         return duration;
     }
+    public void setInfo(String name, String artist, int duration, String genre){
+        setName(name);
+        setArtist(artist);
+        setDuration(duration);
+        setGenre(genre);
+    }
 }

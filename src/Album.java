@@ -16,13 +16,11 @@ public class Album {
 
     public void addSong(Scanner input) {
         boolean u = false;
-        int n = getNumberSongs();
         if (song1 != null && song2 != null && song3 != null && song4 != null) {
             System.out.println("you cannot add more than 4 songs, please delete before adding another");
             return;
         }
         System.out.println("please enter the name of your song:");
-        input.nextLine();
         String name = input.nextLine().strip();
         System.out.println("please enter the name of your artist:");
         String artist = input.nextLine().strip();
@@ -44,19 +42,19 @@ public class Album {
             }
         }
         if(song1!=null){
-            if(name.equals(song1.getName()) && artist.equals(song1.getArtist()) && genre.equals(song1.getGenre()) && duration==song1.getDuration()){
+            if(name.equals(song1.getName()) && artist.equals(song1.getArtist()) && duration==song1.getDuration()){
                 System.out.println("that song already exists so it cannot be added.");
                 return;
             }
         }
         if(song2!=null){
-            if(name.equals(song2.getName()) && artist.equals(song2.getArtist()) && genre.equals(song2.getGenre()) && duration==song2.getDuration()){
+            if(name.equals(song2.getName()) && artist.equals(song2.getArtist()) && duration==song2.getDuration()){
                 System.out.println("that song already exists so it cannot be added.");
                 return;
             }
         }
         if(song3!=null){
-            if(name.equals(song3.getName()) && artist.equals(song3.getArtist()) && genre.equals(song3.getGenre()) && duration==song3.getDuration()){
+            if(name.equals(song3.getName()) && artist.equals(song3.getArtist()) && duration==song3.getDuration()){
                 System.out.println("that song already exists so it cannot be added.");
                 return;
             }
@@ -81,21 +79,8 @@ public class Album {
             song4.setInfo(name, artist, duration, genre);
         }
 
-    } //used in the new song function in SongCollection
-
-    public int getNumberSongs() {
-        int n=0;
-        if(song1 != null){
-            n += 1;
-        } if(song2 != null){
-            n += 1;
-        } if(song3 != null){
-            n += 1;
-        } if(song4 != null){
-            n += 1;
-        }
-        return n;
-    } //gets the number of songs that are in a album
+    } //used in the new song function in SongCollectio
+    //gets the number of songs that are in a album
 
     public String list() {
         String returnS=null;
@@ -104,20 +89,21 @@ public class Album {
                 returnS = "\n Song name: " + song1.getName() + "\n Song Artist: " + song1.getArtist() + "\n Song Duration: " + song1.getDuration() + "\n Song Genre: " + song1.getGenre();
             }
             if(song2 != null) {
-                returnS += "\n Song name: " + song2.getName() + "\n Song Artist: " + song2.getArtist() + "\n Song Duration: " + song2.getDuration() + "\n Song Genre: " + song2.getGenre();
+                returnS += "\n\n Song name: " + song2.getName() + "\n Song Artist: " + song2.getArtist() + "\n Song Duration: " + song2.getDuration() + "\n Song Genre: " + song2.getGenre();
             }
             if(song3 != null) {
-                returnS += "\n Song name: " + song3.getName() + "\n Song Artist: " + song3.getArtist() + "\n Song Duration: " + song3.getDuration() + "\n Song Genre: " + song3.getGenre();
+                returnS += "\n\n Song name: " + song3.getName() + "\n Song Artist: " + song3.getArtist() + "\n Song Duration: " + song3.getDuration() + "\n Song Genre: " + song3.getGenre();
             }
             if(song4 != null) {
-                returnS += "\n Song name: " + song4.getName() + "\n Song Artist: " + song4.getArtist() + "\n Song Duration: " + song4.getDuration() + "\n Song Genre: " + song4.getGenre();
+                returnS += "\n\n Song name: " + song4.getName() + "\n Song Artist: " + song4.getArtist() + "\n Song Duration: " + song4.getDuration() + "\n Song Genre: " + song4.getGenre();
             }
             return returnS;
         }
         else return("there is no songs in this album");
-    } //returns the list of songs for the function listSongs in SongCollection
+    }
+    //returns the list of songs for the function listSongs in SongCollection
 
-    public String underDuration(int x){
+    public String underDuration(float x){
         String return2="";
         if(song1 != null){
             if(song1.getDuration()<x){
@@ -140,7 +126,8 @@ public class Album {
             }
         }
         return return2;
-    } //checks what songs are under the duration and returns a string of them for the function listUnder in SongCollection
+    }
+    //checks what songs are under the duration and returns a string of them for the function listUnder in SongCollection
 
     public String listGenre(String g){
         String genre="";
@@ -225,11 +212,10 @@ public class Album {
     }
 
     public boolean checkAllSong(){
-        if(song1 == null && song2 == null && song3 == null && song4 == null){
-            return false;
-        }
+        if(song1 == null && song2 == null && song3 == null && song4 == null) return false;
         return true;
     }
+
 }
 
 

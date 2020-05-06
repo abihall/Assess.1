@@ -1,4 +1,5 @@
-import java.util.*;
+//Abigail Hall
+//C3324598
 
 public class Album {
     private String name = "";

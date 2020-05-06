@@ -1,3 +1,6 @@
+//Abigail Hall
+//C3324598
+
 import java.util.*;
 
 public class SongCollection {
@@ -413,9 +416,7 @@ public class SongCollection {
             }
         }
         if (album3 != null) {
-            if (album3.getName().equalsIgnoreCase(x)) {
-                return true;
-            }
+            return album3.getName().equalsIgnoreCase(x);
         }
         return false;
     }

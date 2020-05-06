@@ -1,3 +1,6 @@
+//Abigail Hall
+//C3324598
+
 public class Song {
 
    private String name=null, artist=null, genre=null;

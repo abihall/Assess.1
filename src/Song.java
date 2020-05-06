@@ -33,5 +33,4 @@ public class Song {
         setDuration(duration);
         setGenre(genre);
     }
-
 }

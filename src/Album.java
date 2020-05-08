@@ -2,32 +2,34 @@
 //C3324598
 
 public class Album {
-    private String name = "";
+    private String name = null;
     private Song song1 = null, song2 = null, song3 = null, song4 = null;
     private int totalTime=0;
     private final int MAX_TIME = 720; //12 minutes
 
     public String getName() {
         return name;
-    } //gets the name of the album
+    } //gets the name of the album; returns a string
 
     public void setName(String inputName) {
         name = inputName;
     } //sets the name of the album
 
+    //adds a song and returns a string to print to the user displaying either error messages, success messages or information
     public String addSong(String name1, String artist1, int duration1, String genre1) {
         String return1="";
-        if (song1 != null && song2 != null && song3 != null && song4 != null) {
+        if (song1 != null && song2 != null && song3 != null && song4 != null) { //makes sure you don't add more than 4 songs
             return1 += "you cannot add more than 4 songs, please delete before adding another";
             return return1;
         }
-        totalTime += duration1;
-        if(totalTime>MAX_TIME){
+        totalTime += duration1; //adds the songs duration to the totalTime which is the variable keeping up of the total duration of all the songs
+        if(totalTime>MAX_TIME){ //makes sure that the total time of the songs doesn't exceed the mex time of 720 seconds.
             return1 += "the total duration of song time within the album is to big which means this song cant be added";
             return return1;
         }
         if(song1!=null){
             if(name1.equals(song1.getName()) && artist1.equals(song1.getArtist()) && duration1==song1.getDuration()){
+                //makes sure the input from the user of name, artist and duration doesn't match an already existing song
                 return1 = "that song already exists so it cannot be added.";
                 return return1;
             }
@@ -50,9 +52,11 @@ public class Album {
                 return return1;
             }
         }
+        //if it made it to this point it means that there are no songs that match what the user has inputted and there are less than 4 songs,
+        // so the song can be created
         if (song1 == null) {
             song1 = new Song();
-            song1.setInfo(name1, artist1, duration1, genre1);
+            song1.setInfo(name1, artist1, duration1, genre1); //calls the function set info and passes parameters; name1, artist1, duration1 and genre1
             return1 += song1.getName() +" was added";
         } else if (song2 == null) {
             song2 = new Song();
@@ -68,12 +72,12 @@ public class Album {
             return1 += song4.getName() +" was added";
         }
         return return1;
-    } //used in the new song function in SongCollectio
-    //gets the number of songs that are in a album
+    }
 
+    //returns the list of songs within an album as a string
     public String list() {
         String returnS=null;
-        if (song1 != null || song2 != null || song3 != null || song4 != null)  {
+        if (song1 != null || song2 != null || song3 != null || song4 != null)  { //checks that at least one song is not null within the album
             if(song1 != null) {
                 returnS = "\n Song name: " + song1.getName() + "\n Song Artist: " + song1.getArtist() + "\n Song Duration: " + song1.getDuration() + "\n Song Genre: " + song1.getGenre();
             }
@@ -88,15 +92,16 @@ public class Album {
             }
             return returnS;
         }
-        else return("there is no songs in this album");
+        else return("there is no songs in this album"); //returns this error message if there are no songs
     }
-    //returns the list of songs for the function listSongs in SongCollection
 
+    //checks what songs are under the duration x; returns the list of songs as a String
     public String underDuration(float x){
         String return2="";
+        x = x*60; //turns the input into seconds
         if(song1 != null){
-            if(song1.getDuration()<x){
-                return2 += song1.getName();
+            if(song1.getDuration()<x){ //gets the duration of song 1 and checks if it is less than the inputted duration
+                return2 += song1.getName(); //adds the song name to the string that is to be returned so it can be displayed to the user
             }
         }
         if(song2 != null){
@@ -116,13 +121,13 @@ public class Album {
         }
         return return2;
     }
-    //checks what songs are under the duration and returns a string of them for the function listUnder in SongCollection
 
+    //returns a list of all the songs of a certain genre; this genre is passed to the method as String g
     public String listGenre(String g){
         String genre="";
         if(song1 != null){
-            if(song1.getGenre().equals(g)){
-                genre += song1.getName();
+            if(song1.getGenre().equals(g)){ //checks if the genre of song 1 is the same as the user input
+                genre += song1.getName(); //adds the song name to the string that is to be returned since it is of the same genre of the user input
             }
         }
         if(song2 != null){
@@ -143,14 +148,16 @@ public class Album {
         return genre;
     }
 
+    //takes parameters of c and v which are two strings representing the name and artist of the song.
+    // This method returns a string to display to the user whilst also setting a song to null that matches the name and artist
     public String deleteSong(String c, String v){
         String return1="";
         if(song1!=null){
-            if(song1.getName().equals(c) && song1.getArtist().equals(v)){
-                int duration = song1.getDuration();
-                totalTime -= duration;
-                return1 += song1.getName()+ " by " +song1.getArtist()+ " was deleted";
-                song1=null;
+            if(song1.getName().equalsIgnoreCase(c) && song1.getArtist().equalsIgnoreCase(v)){ //checks that this song exists ie. name and artist are the same for one of the songs
+                int duration = song1.getDuration(); //since this song does exist, the duration is then retrieved
+                totalTime -= duration; //since we are deleting the song, the duration of the song must be deducted from the total time
+                return1 += song1.getName()+ " by " +song1.getArtist()+ " was deleted"; //adds to the string return1 which is to be returned to the user to display the message that a particular song was deleted
+                song1=null; //deletes the song
             }
         }
         if(song2!=null){
@@ -162,7 +169,7 @@ public class Album {
             }
         }
         if(song3!=null){
-            if(song3.getName().equals(c) && song3.getArtist().equals(v)){
+            if(song3.getName().equalsIgnoreCase(c) && song3.getArtist().equalsIgnoreCase(v)){
                 int duration = song3.getDuration();
                 totalTime -= duration;
                 return1 += song3.getName()+ " was deleted";
@@ -170,7 +177,7 @@ public class Album {
             }
         }
         if(song4!=null){
-            if(song4.getName().equals(c) && song4.getArtist().equals(v)){
+            if(song4.getName().equalsIgnoreCase(c) && song4.getArtist().equalsIgnoreCase(v)){
                 int duration = song4.getDuration();
                 totalTime -= duration;
                 return1 += song4.getName()+ " was deleted";
@@ -180,31 +187,35 @@ public class Album {
         return return1;
     }
 
+    //checks if a song exists. Returns boolean true if a song matches the given Strings c and v which are the name and artist respectively.
     public boolean checkSongExists(String c, String v){
         boolean u = false;
         if(song1!=null){
-            if(song1.getName().equals(c) && song1.getArtist().equals(v)){
-                 u = true;
+            if(song1.getName().equalsIgnoreCase(c) && song1.getArtist().equalsIgnoreCase(v)){ //checks if the given name and artist match an already existing song within the album
+                 u = true; //boolean is set to true if the if statement is true
             }
         } if(song2!=null){
-            if(song2.getName().equals(c) && song2.getArtist().equals(v)){
+            if(song2.getName().equalsIgnoreCase(c) && song2.getArtist().equalsIgnoreCase(v)){
                 u = true;
             }
         } if(song3!=null){
-            if(song3.getName().equals(c) && song3.getArtist().equals(v)){
+            if(song3.getName().equalsIgnoreCase(c) && song3.getArtist().equalsIgnoreCase(v)){
                 u = true;
             }
         } if(song4!=null){
-            if(song4.getName().equals(c) && song4.getArtist().equals(v)){
+            if(song4.getName().equalsIgnoreCase(c) && song4.getArtist().equalsIgnoreCase(v)){
                 u = true;
             }
         }
         return u;
     }
 
-    public boolean checkAllSong(){
+    //returns a boolean which shows if there is any avaliable space
+    public boolean checkAllSong(){ //returns boolean which shows that there are any songs within an album
         return song1 != null || song2 != null || song3 != null || song4 != null;
     }
+
+    //Returns a string that has a list of all the songs within an album
     public String listName(){
         String return1="";
         if(song1 != null) return1 += "\n Song name: " + song1.getName();

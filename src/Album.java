@@ -1,4 +1,6 @@
-//Abigail Hall
+//Class: Album
+//class used to represent album. has all album instances and methods
+// Abigail Hall
 //C3324598
 
 public class Album {
@@ -95,27 +97,27 @@ public class Album {
         else return("there is no songs in this album"); //returns this error message if there are no songs
     }
 
-    //checks what songs are under the duration x; returns the list of songs as a String
-    public String underDuration(float x){
+    //checks what songs are under the duration und; returns the list of songs as a String
+    public String underDuration(float und){
         String return2="";
-        x = x*60; //turns the input into seconds
+        und = und*60; //turns the input into seconds
         if(song1 != null){
-            if(song1.getDuration()<x){ //gets the duration of song 1 and checks if it is less than the inputted duration
+            if(song1.getDuration()<und){ //gets the duration of song 1 and checks if it is less than the inputted duration
                 return2 += song1.getName(); //adds the song name to the string that is to be returned so it can be displayed to the user
             }
         }
         if(song2 != null){
-            if(song2.getDuration()<x){
+            if(song2.getDuration()<und){
                 return2 += "\n" +song2.getName();
             }
         }
         if(song3 != null){
-            if(song3.getDuration()<x){
+            if(song3.getDuration()<und){
                 return2 += "\n" +song3.getName();
             }
         }
         if(song4 != null){
-            if(song4.getDuration()<x){
+            if(song4.getDuration()<und){
                 return2 += "\n" +song4.getName();
             }
         }
@@ -148,12 +150,12 @@ public class Album {
         return genre;
     }
 
-    //takes parameters of c and v which are two strings representing the name and artist of the song.
+    //takes parameters of name1 and artist1 which are two strings representing the name and artist of the song.
     // This method returns a string to display to the user whilst also setting a song to null that matches the name and artist
-    public String deleteSong(String c, String v){
+    public String deleteSong(String name1, String artist1, int duration1){
         String return1="";
         if(song1!=null){
-            if(song1.getName().equalsIgnoreCase(c) && song1.getArtist().equalsIgnoreCase(v)){ //checks that this song exists ie. name and artist are the same for one of the songs
+            if(song1.getName().equalsIgnoreCase(name1) && song1.getArtist().equalsIgnoreCase(artist1) && song1.getDuration()==(duration1)){ //checks that this song exists ie. name and artist are the same for one of the songs
                 int duration = song1.getDuration(); //since this song does exist, the duration is then retrieved
                 totalTime -= duration; //since we are deleting the song, the duration of the song must be deducted from the total time
                 return1 += song1.getName()+ " by " +song1.getArtist()+ " was deleted"; //adds to the string return1 which is to be returned to the user to display the message that a particular song was deleted
@@ -161,7 +163,7 @@ public class Album {
             }
         }
         if(song2!=null){
-            if(song2.getName().equals(c) && song2.getArtist().equals(v)){
+            if(song2.getName().equals(name1) && song2.getArtist().equals(artist1) && song2.getDuration()==duration1){
                 int duration = song2.getDuration();
                 totalTime -= duration;
                 return1 += song1.getName()+ " by " +song1.getArtist()+ " was deleted";
@@ -169,7 +171,7 @@ public class Album {
             }
         }
         if(song3!=null){
-            if(song3.getName().equalsIgnoreCase(c) && song3.getArtist().equalsIgnoreCase(v)){
+            if(song3.getName().equalsIgnoreCase(name1) && song3.getArtist().equalsIgnoreCase(artist1) && song3.getDuration()==duration1){
                 int duration = song3.getDuration();
                 totalTime -= duration;
                 return1 += song3.getName()+ " was deleted";
@@ -177,7 +179,7 @@ public class Album {
             }
         }
         if(song4!=null){
-            if(song4.getName().equalsIgnoreCase(c) && song4.getArtist().equalsIgnoreCase(v)){
+            if(song4.getName().equalsIgnoreCase(name1) && song4.getArtist().equalsIgnoreCase(artist1) && song4.getDuration()==duration1){
                 int duration = song4.getDuration();
                 totalTime -= duration;
                 return1 += song4.getName()+ " was deleted";
@@ -187,23 +189,23 @@ public class Album {
         return return1;
     }
 
-    //checks if a song exists. Returns boolean true if a song matches the given Strings c and v which are the name and artist respectively.
-    public boolean checkSongExists(String c, String v){
+    //checks if a song exists. Returns boolean true if a song matches the given Strings name1 and artist1 which are the name and artist respectively.
+    public boolean checkSongExists(String name1, String artist1, int duration1){
         boolean u = false;
         if(song1!=null){
-            if(song1.getName().equalsIgnoreCase(c) && song1.getArtist().equalsIgnoreCase(v)){ //checks if the given name and artist match an already existing song within the album
+            if(song1.getName().equalsIgnoreCase(name1) && song1.getArtist().equalsIgnoreCase(artist1) && song1.getDuration()==duration1){ //checks if the given name and artist match an already existing song within the album
                  u = true; //boolean is set to true if the if statement is true
             }
         } if(song2!=null){
-            if(song2.getName().equalsIgnoreCase(c) && song2.getArtist().equalsIgnoreCase(v)){
+            if(song2.getName().equalsIgnoreCase(name1) && song2.getArtist().equalsIgnoreCase(artist1) && song2.getDuration()==duration1){
                 u = true;
             }
         } if(song3!=null){
-            if(song3.getName().equalsIgnoreCase(c) && song3.getArtist().equalsIgnoreCase(v)){
+            if(song3.getName().equalsIgnoreCase(name1) && song3.getArtist().equalsIgnoreCase(artist1) && song3.getDuration()== duration1){
                 u = true;
             }
         } if(song4!=null){
-            if(song4.getName().equalsIgnoreCase(c) && song4.getArtist().equalsIgnoreCase(v)){
+            if(song4.getName().equalsIgnoreCase(name1) && song4.getArtist().equalsIgnoreCase(artist1) && song4.getDuration()== duration1){
                 u = true;
             }
         }

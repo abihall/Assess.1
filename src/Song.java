@@ -1,4 +1,6 @@
-//Abigail Hall
+//Class: Song
+//class used to represent song. has all song instances and methods
+// Abigail Hall
 //C3324598
 
 public class Song {

@@ -429,7 +429,8 @@ public class SongCollection {
         return true;
     }
 
-    private boolean checkSongInAll() { // this method checks if there are any songs within any of the albums.
+    // this method checks if there are any songs within any of the albums.
+    private boolean checkSongInAll() {
         boolean u = false, v = false, k = false;
         if (album1 != null) {
             u = album1.checkAllSong(); //calls the method checkAllSong

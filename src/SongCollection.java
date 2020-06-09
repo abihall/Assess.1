@@ -226,43 +226,25 @@ public class SongCollection {
         String choice;
         boolean u = false;
         System.out.println("please enter the name of the album you would like to delete, the options are the following: ");
-        if (album[0] != null || album[1] != null || album[2] != null || album[3] != null) { //checks if there is any albums to list before trying to list them
-            if (album[0] != null) System.out.println(album[0].getName());
-            if (album[1] != null) System.out.println(album[1].getName());
-            if (album[2] != null) System.out.println(album[2].getName());
-            if (album[3] != null) System.out.println(album[3].getName());
-            y.nextLine();
-            choice = y.nextLine().strip();
-        } else { //this else statement allows for an error message to be displayed when there are no albums to delete
+        for(int i=0; i < numAlbum; i++){
+            System.out.println(album[i].getName());
+        }
+        if(album[0] == null){
             System.out.println("there is no albums to list you must make a album before deleting it");
             return;
+        }else{
+            y.nextLine();
+            choice = y.nextLine().strip();
         }
-        if (album[0] != null) {
-            if (album[0].getName().equalsIgnoreCase(choice)) { //checks if the album name stored is the same as what the user inputted
-                System.out.println(album[0].getName() + " was deleted"); //displays a message sating that the album was deleted
-                album[0] = null; //this 'deletes' the album by setting it to null
-                u = true; //this sets the boolean u to true which will stop a error message form displaying later.
-            }
-        }
-        if (album[1] != null) {
-            if (album[1].getName().equalsIgnoreCase(choice)) {
-                System.out.println(album[1].getName() + " was deleted");
-                album[1] = null;
+        for(int i=0; i < numAlbum; i++){
+            if(album[i].getName().equalsIgnoreCase(choice)){
+                System.out.println(album[i].getName() + " was deleted");
+                album[i] =null;
                 u = true;
-            }
-        }
-        if (album[2] != null) {
-            if (album[2].getName().equalsIgnoreCase(choice)) {
-                System.out.println(album[2].getName() + " was deleted");
-                album[2] = null;
-                u = true;
-            }
-        }
-        if (album[3] != null) {
-            if (album[3].getName().equalsIgnoreCase(choice)) {
-                System.out.println(album[3].getName() + " was deleted");
-                album[3] = null;
-                u = true;
+                numAlbum--;
+                for(int j = i; j < numAlbum-1; j++){
+                    album[j] = album[j+1];
+                }
             }
         }
         if (!u) { // is boolean u is false at the end of this method, the following error message is displayed

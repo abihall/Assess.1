@@ -89,44 +89,16 @@ public class Album {
     // This method returns a string to display to the user whilst also setting a song to null that matches the name and artist
     public String deleteSong(String name1, String artist1, int duration1){
         String return1="";
-        if(song[0]!=null){
-            if(song[0].getName().equalsIgnoreCase(name1) && song[0].getArtist().equalsIgnoreCase(artist1) && song[0].getDuration()==(duration1)){ //checks that this song exists ie. name and artist are the same for one of the songs
-                int duration = song[0].getDuration(); //since this song does exist, the duration is then retrieved
-                totalTime -= duration; //since we are deleting the song, the duration of the song must be deducted from the total time
-                return1 += song[0].getName()+ " by " +song[0].getArtist()+ " was deleted"; //adds to the string return1 which is to be returned to the user to display the message that a particular song was deleted
-                song[0]=null; //deletes the song
-            }
-        }
-        if(song[1]!=null){
-            if(song[1].getName().equals(name1) && song[1].getArtist().equals(artist1) && song[1].getDuration()==duration1){
-                int duration = song[1].getDuration();
+        for(int i=0; i < numSong; i++){
+            if(song[i].getName().equalsIgnoreCase(name1) && song[i].getArtist().equalsIgnoreCase(artist1) && song[i].getDuration() == duration1){
+                int duration = song[i].getDuration();
                 totalTime -= duration;
-                return1 += song[1].getName()+ " by " +song[1].getArtist()+ " was deleted";
-                song[1] = null;
-            }
-        }
-        if(song[2]!=null){
-            if(song[2].getName().equalsIgnoreCase(name1) && song[2].getArtist().equalsIgnoreCase(artist1) && song[2].getDuration()==duration1){
-                int duration = song[2].getDuration();
-                totalTime -= duration;
-                return1 += song[2].getName()+ " was deleted";
-                song[2] = null;
-            }
-        }
-        if(song[3]!=null){
-            if(song[3].getName().equalsIgnoreCase(name1) && song[3].getArtist().equalsIgnoreCase(artist1) && song[3].getDuration()==duration1){
-                int duration = song[3].getDuration();
-                totalTime -= duration;
-                return1 += song[3].getName()+ " was deleted";
-                song[3] = null;
-            }
-        }
-        if(song[4]!=null){
-            if(song[4].getName().equalsIgnoreCase(name1) && song[4].getArtist().equalsIgnoreCase(artist1) && song[4].getDuration()==duration1){
-                int duration = song[4].getDuration();
-                totalTime -= duration;
-                return1 += song[4].getName()+ " was deleted";
-                song[4] = null;
+                return1 += song[i].getName() + " by " +song[i].getArtist()+ " was deleted";
+                song[i] = null;
+                numSong--;
+                for(int j=i; j < numSong-1; j++){
+                    song[j] = song[j+1];
+                }
             }
         }
         return return1;

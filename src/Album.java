@@ -8,6 +8,7 @@ public class Album {
     private Song[] song = new Song[5];
     private int totalTime=0;
     private final int MAX_TIME = 720; //12 minutes
+    private int numSong = 0;
 
     public String getName() {
         return name;
@@ -20,6 +21,9 @@ public class Album {
     //adds a song and returns a string to print to the user displaying either error messages, success messages or information
     public String addSong(String name1, String artist1, int duration1, String genre1) {
         String return1="";
+        if(numSong == 5){
+
+        }
         if (song[0] != null && song[1] != null && song[2] != null && song[3] != null && song[4] != null) { //makes sure you don't add more than 4 songs
             return1 += "you cannot add more than 5 songs, please delete before adding another";
             return return1;

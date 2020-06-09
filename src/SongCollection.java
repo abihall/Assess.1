@@ -41,7 +41,7 @@ public class SongCollection {
                     break;
                 }
                 case 3: {
-                    if (album[0] == null && album[1] == null && album[2] == null && album[3] == null) { //checks if all the albums are null, if so displays a message
+                    if (numAlbum == 4) { //checks if all the albums are null, if so displays a message
                         System.out.println("there are no albums to list the songs for");
                         break;
                     }
@@ -49,7 +49,7 @@ public class SongCollection {
                     break;
                 }
                 case 4: {
-                    if (album[0] == null && album[1] == null && album[2] == null && album[3] == null) { //checks if all the albums are null, if so displays a message
+                    if (numAlbum == 4) { //checks if all the albums are null, if so displays a message
                         System.out.println("there are no albums to list");
                         break;
                     }
@@ -57,7 +57,7 @@ public class SongCollection {
                     break;
                 }
                 case 5: {
-                    if (album[0] == null && album[1] == null && album[2] == null && album[3] == null) { //checks if all the albums are null, if so displays a message
+                    if (numAlbum == 4) { //checks if all the albums are null, if so displays a message
                         System.out.println("there are no songs yet");
                         break;
                     }
@@ -65,7 +65,7 @@ public class SongCollection {
                     break;
                 }
                 case 6: {
-                    if (album[0] == null && album[1] == null && album[2] == null && album[3] == null) { //checks if all the albums are null, if so displays a message
+                    if (numAlbum == 4) { //checks if all the albums are null, if so displays a message
                         System.out.println("there are no songs yet");
                         break;
                     }
@@ -73,7 +73,7 @@ public class SongCollection {
                     break;
                 }
                 case 7: {
-                    if (album[0] == null && album[1] == null && album[2] == null && album[3] == null) { //checks if all the albums are null, if so displays a message
+                    if (numAlbum == 4) { //checks if all the albums are null, if so displays a message
                         System.out.println("there are no albums to delete");
                         break;
                     }
@@ -81,7 +81,7 @@ public class SongCollection {
                     break;
                 }
                 case 8: {
-                    if (album[0] == null && album[1] == null && album[2] == null && album[3] == null){ //checks if all the albums are null, if so displays a message
+                    if (numAlbum == 4){ //checks if all the albums are null, if so displays a message
                         System.out.println("there are no songs to delete");
                         break;
                     }

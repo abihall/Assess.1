@@ -3,21 +3,40 @@
 // Abigail Hall
 //C3324598
 
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.InputStreamReader;
 import java.util.*;
 
 public class SongCollection {
     private Album[] album = new Album[4];
     private int choice2;
     private String name1;
-    private boolean n=true;
+    private boolean n=true, u=true;
     private int numAlbum = 0;
 
     private void run() {
         System.out.println("\n\nbefore we start, there are a few things to note: ");
         System.out.println("the input is not case sensitive nor does it matter if spaces are put before or after the input");
 
+        Scanner console = new Scanner(System.in);
+//        while(u)
+//        System.out.println("would you like to use an external file? type yes or no");
+//        console.next();
+//        String ch = console.nextLine();
+//
+//        if(ch.equalsIgnoreCase("yes")){
+//            externalFile(console);
+//              u=false;
+//        } else if(ch.equalsIgnoreCase("no")){
+//            System.out.println("all good, continue-");
+//            u=false;
+//        } else{
+//            System.out.println("that wasn't yes or no!");
+//            u=true;
+//        }
+
         while(n) { //this while loop makes sure the messages are constantly asked until the user decides the exit
-            Scanner console = new Scanner(System.in);
             //displays multipule messages to the user and asks them to pick one
             System.out.println("\nthe following is a list of all the tasks you can complete, please type the corrosponding number to the task you would like to complete");
             System.out.println("(1) create a album");
@@ -28,7 +47,8 @@ public class SongCollection {
             System.out.println("(6) list of all songs from a certain genre");
             System.out.println("(7) delete a album");
             System.out.println("(8) delete a song from a album");
-            System.out.println("(9) exit");
+            System.out.println("(9) if you want to list a song with a particular name");
+            System.out.println("(10) exit");
             int choice = console.nextInt(); //takes the choice of the user
 
             switch (choice) { //creates a switch statement for this choice
@@ -89,6 +109,9 @@ public class SongCollection {
                     break;
                 }
                 case 9: {
+                    listOneSong(console);
+                }
+                case 10: {
                     System.out.println("You exited!");
                     return;
                 }
@@ -99,6 +122,11 @@ public class SongCollection {
             }
         }
     }
+//    public void externalFile(Scanner y){
+//        FileInputStream fs = new FileInputStream("ReginaCollection.txt");
+//        BufferedReader br = new BufferedReader(new InputStreamReader(fs));
+//        if()
+//    }
 
     public static void main(String[] args) {
         SongCollection sg = new SongCollection(); //creates a new instance of SongCollection class
@@ -122,6 +150,7 @@ public class SongCollection {
         } else {
             System.out.println("there is no avaliable space");
         }
+        sortingModel();
     }
 
     // adds a new song into an album specified by the user. it allows the user to set the name,artist,duration and genre
@@ -165,7 +194,16 @@ public class SongCollection {
             System.out.println("you didnt enter a valid album option so this song cant be added");
         }
     }
-
+    private void sortingModel(){
+        Album temp;
+        for(int j=0; j < numAlbum -1 ; j++){
+            if(album[j].getName().compareToIgnoreCase(album[j+1].getName())>0){
+                temp = album[j];
+                album[j] = album[j +1];
+                album[j+1]=temp;
+            }
+        }
+    }
     //lists all the songs
     private void listSongs(Scanner y) {
         System.out.println("what album would you like to list all the songs for?");
@@ -239,12 +277,11 @@ public class SongCollection {
         for(int i=0; i < numAlbum; i++){
             if(album[i].getName().equalsIgnoreCase(choice)){
                 System.out.println(album[i].getName() + " was deleted");
-                album[i] =null;
                 u = true;
-                numAlbum--;
                 for(int j = i; j < numAlbum-1; j++){
                     album[j] = album[j+1];
                 }
+                numAlbum--;
             }
         }
         if (!u) { // is boolean u is false at the end of this method, the following error message is displayed
@@ -259,37 +296,13 @@ public class SongCollection {
         String artist;
         int duration;
         boolean al = false;
-        int n = 0;
-        if (album[0] == null) n++; //if an album doesn't exist it incruments n by 1
-        if (album[1] == null) n++;
-        if (album[2] == null) n++;
-        if (album[3] == null) n++;
-        System.out.println("the following is a list of all the songs in each album: \n");
-        if (album[0] != null) {
-            System.out.println("all the songs in the album '" + album[0].getName() + "' are: \n" + album[0].list()); //displays to the user all the album names and the songs within them
-            if (!album[0].checkAllSong()) { //boolean false means there are no songs within album1 meaning n is incrumented by 1
-                n += 1;
-            }
+        System.out.println("the following is a list of all songs in each album: \n");
+        for(int i=0; i < numAlbum; i++){
+            System.out.println("all the songs in the album '" + album[i].getName() + "' are: \n" + album[i].list());
         }
-        if (album[1] != null) {
-            System.out.println("all the songs in the album '" + album[1].getName() + "' are: \n" + album[1].list());
-            if (!album[1].checkAllSong()) {
-                n += 1;
-            }
-        }
-        if (album[2] != null) {
-            System.out.println("all the songs in album '" + album[2].getName() + "' are:\n " + album[2].list());
-            if (!album[2].checkAllSong()) {
-                n += 1;
-            }
-        }
-        if (album[3] != null) {
-            System.out.println("all the songs in the album '" + album[3].getName() + "' are: \n" + album[3].list());
-            if (!album[3].checkAllSong()) {
-                n += 1;
-            }
-        }
-        if (n == 4) { //if n was incrumented 3 times the following error message is displayed. If n was incrumented 3 times it means there are no songs within any of the albums or no albums
+
+
+        if (checkSongInAll()) { //if n was incrumented 3 times the following error message is displayed. If n was incrumented 3 times it means there are no songs within any of the albums or no albums
             System.out.println("\nWhich means there are no songs to delete");
             return;
         }
@@ -307,35 +320,11 @@ public class SongCollection {
         System.out.println("please enter the duration of the song in seconds: ");
         duration = y.nextInt();
 
-        if (album[0] != null) {
-            if (album[0].getName().equalsIgnoreCase(album_name)) { //checks if the album name entered matches any of the current album names
-                if (album[0].checkSongExists(name, artist, duration)) { //calls the method checkSongExists and passes two strings name and artist
+        for(int i=0; i < numAlbum; i++){
+            if(album[i].getName().equalsIgnoreCase(album_name)){
+                if(album[i].checkSongExists(name, artist, duration)){
                     al = true;
-                    System.out.println(album[0].deleteSong(name, artist, duration)); //calls the function deleteSong
-                }
-            }
-        }
-        if (album[1] != null) {
-            if (album[1].getName().equalsIgnoreCase(album_name)) {
-                if (album[1].checkSongExists(name, artist, duration)) {
-                    al = true;
-                    System.out.println(album[1].deleteSong(name, artist, duration));
-                }
-            }
-        }
-        if (album[2] != null) {
-            if (album[2].getName().equalsIgnoreCase(album_name)) {
-                if (album[2].checkSongExists(name, artist, duration)) {
-                    al = true;
-                    System.out.println(album[2].deleteSong(name, artist, duration));
-                }
-            }
-        }
-        if (album[3] != null) {
-            if (album[3].getName().equalsIgnoreCase(album_name)) {
-                if (album[3].checkSongExists(name, artist, duration)) {
-                    al = true;
-                    System.out.println(album[3].deleteSong(name, artist, duration));
+                    System.out.println(album[i].deleteSong(name, artist, duration));
                 }
             }
         }
@@ -343,26 +332,18 @@ public class SongCollection {
         if (!al) System.out.println("that song does not exist so it cant be deleted. ");
 
     }
+    private void listOneSong(Scanner y){
+        System.out.println("type the name of the song you want to delete");
+        String name = y.nextLine().strip();
+        for(int i=0; i < numAlbum; i++){
+            System.out.println(album[i].list2(name));
+        }
+    }
 
     //checks if the album name entered by the user exists. returns a boolean
     private boolean checkAlbumExist(String x) { //this method checks if the album exists by checking the inputted album name with the stored album name
-        if (album[0] != null) {
-            if (album[0].getName().equalsIgnoreCase(x)) {
-                return false;
-            }
-        }
-        if (album[1] != null) {
-            if (album[1].getName().equalsIgnoreCase(x)) {
-                return false;
-            }
-        }
-        if (album[2] != null) {
-            if(album[2].getName().equalsIgnoreCase(x)){
-                return false;
-            }
-        }
-        if (album[3] != null) {
-            if(album[3].getName().equalsIgnoreCase(x)){
+        for(int i=0; i < numAlbum; i++){
+            if(album[i].getName().equalsIgnoreCase(x)){
                 return false;
             }
         }

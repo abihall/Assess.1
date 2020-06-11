@@ -41,11 +41,23 @@ public class Album {
         song[numSong].setInfo(name1, artist1, duration1, genre1);
         return1 += song[numSong].getName() + " was added";
         numSong++;
+        sortingModel();
         return return1;
 
         //if it made it to this point it means that there are no songs that match what the user has inputted and there are less than 4 songs,
         // so the song can be created
     }
+    private void sortingModel(){
+        Song temp;
+        for(int j=0; j < numSong-1 ; j++){
+            if(song[j].getName().compareToIgnoreCase(song[j+1].getName())>0){
+                temp = song[j];
+                song[j] = song[j +1];
+                song[j+1]=temp;
+            }
+        }
+    }
+
 
     //returns the list of songs within an album as a string
     public String list() {
@@ -57,6 +69,15 @@ public class Album {
             return returnS;
         }
         else return("there is no songs in this album"); //returns this error message if there are no songs
+    }
+    public String list2(String name1) {
+        String return1 = "";
+        for(int i=0; i < numSong; i++){
+            if(name1.equalsIgnoreCase(song[i].getName())){
+                return1 += "\n Song name: " +song[i].getName() + "\n Song Artist: " + song[i].getArtist() + "\n Song Duration: " + song[i].getDuration() + "\n Song Genre: " + song[i].getGenre();
+            }
+        }
+        return return1;
     }
 
     //checks what songs are under the duration und; returns the list of songs as a String
@@ -94,11 +115,10 @@ public class Album {
                 int duration = song[i].getDuration();
                 totalTime -= duration;
                 return1 += song[i].getName() + " by " +song[i].getArtist()+ " was deleted";
-                song[i] = null;
-                numSong--;
                 for(int j=i; j < numSong-1; j++){
                     song[j] = song[j+1];
                 }
+                numSong--;
             }
         }
         return return1;

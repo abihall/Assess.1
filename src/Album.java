@@ -49,11 +49,13 @@ public class Album {
     }
     private void sortingModel(){
         Song temp;
-        for(int j=0; j < numSong-1 ; j++){
-            if(song[j].getName().compareToIgnoreCase(song[j+1].getName())>0){
-                temp = song[j];
-                song[j] = song[j +1];
-                song[j+1]=temp;
+        for(int count = 0; count < 6; count++) {
+            for (int j = 0; j < numSong - 1; j++) {
+                if (song[j].getName().compareToIgnoreCase(song[j + 1].getName()) > 0) {
+                    temp = song[j];
+                    song[j] = song[j + 1];
+                    song[j + 1] = temp;
+                }
             }
         }
     }

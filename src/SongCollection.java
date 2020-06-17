@@ -3,10 +3,9 @@
 // Abigail Hall
 //C3324598
 
-import java.io.BufferedReader;
-import java.io.FileInputStream;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.util.*;
+import java.util.Scanner;
 
 public class SongCollection {
     private Album[] album = new Album[4];
@@ -20,6 +19,7 @@ public class SongCollection {
         System.out.println("the input is not case sensitive nor does it matter if spaces are put before or after the input");
 
         Scanner console = new Scanner(System.in);
+
 //        while(u)
 //        System.out.println("would you like to use an external file? type yes or no");
 //        console.next();
@@ -61,7 +61,7 @@ public class SongCollection {
                     break;
                 }
                 case 3: {
-                    if (numAlbum == 4) { //checks if all the albums are null, if so displays a message
+                    if (numAlbum == 0) { //checks if all the albums are null, if so displays a message
                         System.out.println("there are no albums to list the songs for");
                         break;
                     }
@@ -69,7 +69,7 @@ public class SongCollection {
                     break;
                 }
                 case 4: {
-                    if (numAlbum == 4) { //checks if all the albums are null, if so displays a message
+                    if (numAlbum == 0) { //checks if all the albums are null, if so displays a message
                         System.out.println("there are no albums to list");
                         break;
                     }
@@ -77,7 +77,7 @@ public class SongCollection {
                     break;
                 }
                 case 5: {
-                    if (numAlbum == 4) { //checks if all the albums are null, if so displays a message
+                    if (numAlbum == 0) { //checks if all the albums are null, if so displays a message
                         System.out.println("there are no songs yet");
                         break;
                     }
@@ -85,7 +85,7 @@ public class SongCollection {
                     break;
                 }
                 case 6: {
-                    if (numAlbum == 4) { //checks if all the albums are null, if so displays a message
+                    if (numAlbum == 0) { //checks if all the albums are null, if so displays a message
                         System.out.println("there are no songs yet");
                         break;
                     }
@@ -93,7 +93,7 @@ public class SongCollection {
                     break;
                 }
                 case 7: {
-                    if (numAlbum == 4) { //checks if all the albums are null, if so displays a message
+                    if (numAlbum == 0) { //checks if all the albums are null, if so displays a message
                         System.out.println("there are no albums to delete");
                         break;
                     }
@@ -101,7 +101,7 @@ public class SongCollection {
                     break;
                 }
                 case 8: {
-                    if (numAlbum == 4){ //checks if all the albums are null, if so displays a message
+                    if (numAlbum == 0){ //checks if all the albums are null, if so displays a message
                         System.out.println("there are no songs to delete");
                         break;
                     }
@@ -196,11 +196,13 @@ public class SongCollection {
     }
     private void sortingModel(){
         Album temp;
-        for(int j=0; j < numAlbum -1 ; j++){
-            if(album[j].getName().compareToIgnoreCase(album[j+1].getName())>0){
-                temp = album[j];
-                album[j] = album[j +1];
-                album[j+1]=temp;
+        for(int count = 0; count < 5; count++){
+            for (int j = 0; j < numAlbum - 1; j++) {
+                if (album[j].getName().compareToIgnoreCase(album[j + 1].getName()) > 0) {
+                    temp = album[j];
+                    album[j] = album[j + 1];
+                    album[j + 1] = temp;
+                }
             }
         }
     }
@@ -371,4 +373,21 @@ public class SongCollection {
         }
         return false;
     }
+    public void ReadFile() throws IOException {
+        File info = new File("ReginaCollection.txt");
+        Scanner reader;
+        int songNum =0;
+        {
+            try {
+                reader = new Scanner(info);
+                        while(reader.hasNextLine()) {
+                                
+                            }
+            } catch (FileNotFoundException e) {
+                System.out.println("there was an error with the file");
+                e.printStackTrace();
+            }
+        }
+    }
 }
+

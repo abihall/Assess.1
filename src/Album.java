@@ -5,7 +5,7 @@
 
 public class Album {
     private String name = null;
-    private Song[] song = new Song[5];
+    private final Song[] song = new Song[5];
     private int totalTime=0;
     private final int MAX_TIME = 720; //12 minutes
     private int numSong = 0;

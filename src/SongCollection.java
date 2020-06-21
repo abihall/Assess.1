@@ -4,14 +4,14 @@
 //C3324598
 
 import java.io.*;
-import java.util.*;
 import java.util.Scanner;
 
 public class SongCollection {
-    private Album[] album = new Album[4];
+    private final Album[] album = new Album[4];
     private int choice2;
+
     private String name1;
-    private boolean n=true, u=true;
+    private boolean n=true, u=true, t=true, file=true;
     private int numAlbum = 0;
 
     private void run() {
@@ -20,22 +20,26 @@ public class SongCollection {
 
         Scanner console = new Scanner(System.in);
 
-//        while(u)
-//        System.out.println("would you like to use an external file? type yes or no");
-//        console.next();
-//        String ch = console.nextLine();
-//
-//        if(ch.equalsIgnoreCase("yes")){
-//            externalFile(console);
-//              u=false;
-//        } else if(ch.equalsIgnoreCase("no")){
-//            System.out.println("all good, continue-");
-//            u=false;
-//        } else{
-//            System.out.println("that wasn't yes or no!");
-//            u=true;
-//        }
+        while(t) {
+            System.out.println("would you like to use an external file? type yes or no");
+            String ch = console.nextLine();
 
+            if (ch.equalsIgnoreCase("yes")) {
+                t = false;
+                file = true;
+                try {
+                    ReadFile(console);
+                } catch (IOException e) {
+                }
+            } else if (ch.equalsIgnoreCase("no")) {
+                System.out.println("all good, continue-");
+                t = false;
+                file = false;
+            } else {
+                System.out.println("that wasn't yes or no!");
+                t = true;
+            }
+        }
         while(n) { //this while loop makes sure the messages are constantly asked until the user decides the exit
             //displays multipule messages to the user and asks them to pick one
             System.out.println("\nthe following is a list of all the tasks you can complete, please type the corrosponding number to the task you would like to complete");
@@ -53,11 +57,11 @@ public class SongCollection {
 
             switch (choice) { //creates a switch statement for this choice
                 case 1: {
-                    makeAlbum(console); //calls the method makeAlbum
+                    makeAlbum(console, ""); //calls the method makeAlbum
                     break;
                 }
                 case 2: {
-                    newSong(console); //calls the method newSong
+                    newSong(console,"","","","", ""); //calls the method newSong
                     break;
                 }
                 case 3: {
@@ -109,7 +113,7 @@ public class SongCollection {
                     break;
                 }
                 case 9: {
-                    listOneSong(console);
+                    System.out.println(listOneSong(console));
                 }
                 case 10: {
                     System.out.println("You exited!");
@@ -122,19 +126,18 @@ public class SongCollection {
             }
         }
     }
-//    public void externalFile(Scanner y){
-//        FileInputStream fs = new FileInputStream("ReginaCollection.txt");
-//        BufferedReader br = new BufferedReader(new InputStreamReader(fs));
-//        if()
-//    }
-
     public static void main(String[] args) {
         SongCollection sg = new SongCollection(); //creates a new instance of SongCollection class
         sg.run(); //runs the SongCollection.run() method within song collection
     }
 
     //makes a new album
-    private void makeAlbum(Scanner y) {    //adds an album
+    private void makeAlbum(Scanner y, String name1) {    //adds an album
+        if(file){
+            album[numAlbum] = new Album();
+            album[numAlbum].setName(name1);
+            numAlbum++;
+        }
         if (numAlbum < 4) { //having this if statement allows the user to only enter the name of an album if there is avaliable space
             System.out.println("please enter the name of your album:");
             y.nextLine(); //gets rid of the /n
@@ -154,20 +157,33 @@ public class SongCollection {
     }
 
     // adds a new song into an album specified by the user. it allows the user to set the name,artist,duration and genre
-    private void newSong(Scanner y) { //adds a new song to a album
+    private void newSong(Scanner y, String albumName1, String name1, String artist1, String duration1, String genre1) { //adds a new song to a album
         boolean valid = false;
         boolean u = false;
+        if(file){
+            int duration2 = Integer.parseInt(duration1);
+            for (int i = 0; i < numAlbum; i++) {
+                if(album[i].getName().equalsIgnoreCase(albumName1)){
+                    System.out.println(album[i].addSong(name1,artist1,duration2,genre1));
+                }
+            }
+            return;
+        }
         if (numAlbum == 0) { //this statement checks if none of the albums exist, and if so displays the error message
             System.out.println("there are no albums to add songs into");
             return;
         }
-        System.out.println("Please type the name of the album you want to add a song into, the following are the options: ");
-        for(int i=0; i<numAlbum; i++){
-            System.out.println(album[i].getName());
+        String nameList = listOneSong(y);
+        if(!nameList.equalsIgnoreCase("")) {
+            System.out.println(nameList);
+            System.out.println("Would you like to continue? Type yes or no");
+            String choice = y.nextLine();
+            if(choice.equalsIgnoreCase("no")){
+                    return;
+            }
         }
-        y.nextLine();
+        System.out.println("Please type the name of the album you want to add a song into");
         String albumName = y.nextLine().strip(); //scans the next entered line, strips white space and assigns it to the string albumName
-
         System.out.println("please enter the name of your song:");
         String name = y.nextLine().strip();
         System.out.println("please enter the name of your artist:");
@@ -194,18 +210,6 @@ public class SongCollection {
             System.out.println("you didnt enter a valid album option so this song cant be added");
         }
     }
-    private void sortingModel(){
-        Album temp;
-        for(int count = 0; count < 5; count++){
-            for (int j = 0; j < numAlbum - 1; j++) {
-                if (album[j].getName().compareToIgnoreCase(album[j + 1].getName()) > 0) {
-                    temp = album[j];
-                    album[j] = album[j + 1];
-                    album[j + 1] = temp;
-                }
-            }
-        }
-    }
     //lists all the songs
     private void listSongs(Scanner y) {
         System.out.println("what album would you like to list all the songs for?");
@@ -224,6 +228,7 @@ public class SongCollection {
 
         for (int i = 0; i < numAlbum; i++) {
             System.out.println("Album name: " + album[i].getName());
+            album[i].listName();
         }
     }
 
@@ -334,12 +339,15 @@ public class SongCollection {
         if (!al) System.out.println("that song does not exist so it cant be deleted. ");
 
     }
-    private void listOneSong(Scanner y){
-        System.out.println("type the name of the song you want to delete");
-        String name = y.nextLine().strip();
+    private String listOneSong(Scanner x){
+        String list = "";
+        System.out.println("Please enter the name of the song: ");
+        x.nextLine();
+        String name = x.nextLine().strip();
         for(int i=0; i < numAlbum; i++){
-            System.out.println(album[i].list2(name));
+            list += album[i].list2(name);
         }
+        return list;
     }
 
     //checks if the album name entered by the user exists. returns a boolean
@@ -373,19 +381,51 @@ public class SongCollection {
         }
         return false;
     }
-    public void ReadFile() throws IOException {
+    public void ReadFile(Scanner scan) throws IOException {
         File info = new File("ReginaCollection.txt");
         Scanner reader;
         int songNum =0;
+        String albumName = "", name="", artist = "", genre= "", duration="";
+
         {
             try {
                 reader = new Scanner(info);
                         while(reader.hasNextLine()) {
-                                
+                                String line = reader.nextLine();
+                                if(line.contains("Album")){
+                                    albumName = line.substring(6);
+                                    makeAlbum(scan, albumName);
+                                }
+                                if(line.contains("Name")){
+                                    name = line.substring(5);
+
+                                }
+                                if(line.contains("Artist")){
+                                    artist = line.substring(7);
+                                }
+                                if(line.contains("Duration")){
+                                    duration = line.substring(9);
+                                }
+                                if(line.contains("Genre")){
+                                    genre = line.substring(6);
+                                    newSong(scan, albumName, name, artist, duration, genre);
+                                }
                             }
             } catch (FileNotFoundException e) {
                 System.out.println("there was an error with the file");
-                e.printStackTrace();
+                file = false;
+            }
+        }
+    }
+    private void sortingModel(){
+        Album temp;
+        for(int count = 0; count < 5; count++){
+            for (int j = 0; j < numAlbum - 1; j++) {
+                if (album[j].getName().compareToIgnoreCase(album[j + 1].getName()) > 0) {
+                    temp = album[j];
+                    album[j] = album[j + 1];
+                    album[j + 1] = temp;
+                }
             }
         }
     }

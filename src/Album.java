@@ -146,11 +146,9 @@ public class Album {
     //Returns a string that has a list of all the songs within an album
     public String listName(){
         String return1="";
-        if(song[0] != null) return1 += "\n Song name: " + song[0].getName();
-        if(song[1] != null) return1 += "\n Song name: " + song[1].getName();
-        if(song[2] != null) return1 += "\n Song name: " + song[2].getName();
-        if(song[3] != null) return1 += "\n Song name: " + song[3].getName();
-        if(song[4] != null) return1 += "\n Song name: " + song[4].getName();
+        for(int i=0; i < numSong; i++){
+            return1 += "Song:" +song[i].getName()+ "\n";
+        }
         return return1;
     }
 

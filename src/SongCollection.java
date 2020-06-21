@@ -162,6 +162,7 @@ public class SongCollection {
         boolean valid = false;
         boolean u = false;
         if(file){
+            duration1 = duration1.trim();
             int duration2 = Integer.parseInt(duration1);
             for (int i = 0; i < numAlbum; i++) {
                 if(album[i].getName().equalsIgnoreCase(albumName1)){
@@ -229,7 +230,7 @@ public class SongCollection {
 
         for (int i = 0; i < numAlbum; i++) {
             System.out.println("Album name: " + album[i].getName());
-            album[i].listName();
+            System.out.println(album[i].listName());
         }
     }
 

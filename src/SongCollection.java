@@ -8,10 +8,7 @@ import java.util.Scanner;
 
 public class SongCollection {
     private final Album[] album = new Album[4];
-    private int choice2;
-
-    private String name1;
-    private boolean n=true, u=true, t=true, file=true;
+    private boolean t=true, file=true;
     private int numAlbum = 0;
 
     private void run() {
@@ -40,7 +37,7 @@ public class SongCollection {
                 t = true;
             }
         }
-        while(n) { //this while loop makes sure the messages are constantly asked until the user decides the exit
+        while(true) { //this while loop makes sure the messages are constantly asked until the user decides the exit
             //displays multipule messages to the user and asks them to pick one
             System.out.println("\nthe following is a list of all the tasks you can complete, please type the corrosponding number to the task you would like to complete");
             System.out.println("(1) create a album");
@@ -113,7 +110,12 @@ public class SongCollection {
                     break;
                 }
                 case 9: {
+                    if(listOneSong(console).equalsIgnoreCase("")){
+                        System.out.println("There are no songs of that name to list");
+                        break;
+                    }
                     System.out.println(listOneSong(console));
+                    break;
                 }
                 case 10: {
                     System.out.println("You exited!");
@@ -216,9 +218,9 @@ public class SongCollection {
     private void listSongs(Scanner y) {
         System.out.println("what album would you like to list all the songs for?");
         for (int i = 0; i < numAlbum; i++) {
-            System.out.println("Press " +i+ "for all the songs in " +album[i].getName());
+            System.out.println("Press " +i+ " for all the songs in " +album[i].getName());
         }
-        choice2 = y.nextInt();
+        int choice2 = y.nextInt();
         if(album[choice2] != null){
             System.out.println(album[choice2].list());
         }else System.out.println("that wasn't a valid album so it cannot be listed");

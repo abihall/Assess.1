@@ -137,6 +137,7 @@ public class SongCollection {
             album[numAlbum] = new Album();
             album[numAlbum].setName(name1);
             numAlbum++;
+            return;
         }
         if (numAlbum < 4) { //having this if statement allows the user to only enter the name of an album if there is avaliable space
             System.out.println("please enter the name of your album:");
@@ -382,7 +383,7 @@ public class SongCollection {
         return false;
     }
     public void ReadFile(Scanner scan) throws IOException {
-        File info = new File("ReginaCollection.txt");
+        File info = new File("ReginaCollection");
         Scanner reader;
         int songNum =0;
         String albumName = "", name="", artist = "", genre= "", duration="";

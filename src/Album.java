@@ -47,31 +47,20 @@ public class Album {
         //if it made it to this point it means that there are no songs that match what the user has inputted and there are less than 4 songs,
         // so the song can be created
     }
-    private void sortingModel(){
-        Song temp;
-        for(int count = 0; count < 6; count++) {
-            for (int j = 0; j < numSong - 1; j++) {
-                if (song[j].getName().compareToIgnoreCase(song[j + 1].getName()) > 0) {
-                    temp = song[j];
-                    song[j] = song[j + 1];
-                    song[j + 1] = temp;
-                }
-            }
-        }
-    }
-
 
     //returns the list of songs within an album as a string
     public String list() {
         String returnS= "";
         if (numSong != 5)  { //checks that at least one song is not null within the album
             for(int i=0; i < numSong; i++){
-                returnS += "\n Song name: " +song[i].getName() + "\n Song Artist: " + song[i].getArtist() + "\n Song Duration: " + song[i].getDuration() + "\n Song Genre: " + song[i].getGenre();
+                returnS += "\n Song name: " +song[i].getName() + "\n Song Artist: " + song[i].getArtist() + "\n Song Duration: " + song[i].getDuration() + "\n Song Genre: " + song[i].getGenre() + "\n";
             }
             return returnS;
         }
         else return("there is no songs in this album"); //returns this error message if there are no songs
     }
+
+    //returns a list of songs with the same name as a string
     public String list2(String name1) {
         String return1 = "";
         for(int i=0; i < numSong; i++){
@@ -88,7 +77,7 @@ public class Album {
         und = und*60; //turns the input into seconds
         for(int i=0; i < numSong; i++) {
             if (song[i].getDuration() < und) {
-                return2 += song[i].getName() + " ";
+                return2 += song[i].getName() + "\n";
             }
         }
         return return2;
@@ -99,7 +88,7 @@ public class Album {
         String genre="";
         for(int i=0; i < numSong; i++){
             if(song[i].getGenre().equals(g)){
-                genre += song[i].getName();
+                genre += song[i].getName() + "\n";
             }
         }
         if(genre.equals("")){
@@ -117,7 +106,7 @@ public class Album {
                 int duration = song[i].getDuration();
                 totalTime -= duration;
                 return1 += song[i].getName() + " by " +song[i].getArtist()+ " was deleted";
-                for(int j=i; j < numSong-1; j++){
+                for(int j=i; j < numSong-1; j++){ //this for loop deletes the song by writing over it
                     song[j] = song[j+1];
                 }
                 numSong--;
@@ -151,6 +140,21 @@ public class Album {
         }
         return return1;
     }
+
+    //sorts the songs into alphabetical order
+    private void sortingModel(){
+        Song temp;
+        for(int count = 0; count < 6; count++) { //count<6 since their is only 5 songs
+            for (int j = 0; j < numSong - 1; j++) {
+                if (song[j].getName().compareToIgnoreCase(song[j + 1].getName()) > 0) {
+                    temp = song[j];
+                    song[j] = song[j + 1];
+                    song[j + 1] = temp;
+                }
+            }
+        }
+    }
+
 
 }
 

@@ -3,6 +3,8 @@
 // Abigail Hall
 //C3324598
 
+//this is album
+
 public class Album {
     private String name = null;
     private final Song[] song = new Song[5];
